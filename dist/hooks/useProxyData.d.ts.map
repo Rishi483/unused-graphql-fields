@@ -1,0 +1,1 @@
+{"version":3,"file":"useProxyData.d.ts","sourceRoot":"","sources":["../../src/hooks/useProxyData.tsx"],"names":[],"mappings":"AACA,OAAO,EAAE,UAAU,EAAE,MAAM,qBAAqB,CAAC;AAuBjD,UAAU,SAAS,CAAC,KAAK;IACvB,IAAI,EAAE,KAAK,CAAC;IACZ,aAAa,EAAE,UAAU,CAAC;IAC1B,UAAU,EAAE,MAAM,EAAE,CAAC;CACtB;AAED,QAAA,MAAM,YAAY,GAAa,KAAK,wCAIjC,SAAS,CAAC,KAAK,CAAC,KAAG,KAyBrB,CAAC;AAEF,eAAe,YAAY,CAAC"}

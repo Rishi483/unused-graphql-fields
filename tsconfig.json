@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "jsx": "react",
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,          // Generate declaration files (.d.ts)
+    "declarationMap": true,       // Optional but helpful for debugging
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"] 
+}
