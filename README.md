@@ -1,6 +1,5 @@
 # unused-graphql-fields
 
-## Overview
 
 `unused-graphql-fields` is a utility package for detecting unused fields in your GraphQL queries. It provides custom hooks, `useTrackedQuery`, `useTrackedLazyQuery` and `useTrackedData` as alternatives to Apollo Client's hooks. Additionally, the package includes a component, `UnusedFieldsViewer`,`TreeViewRenderer`, which can be used to visualize the unused fields in your application.
 

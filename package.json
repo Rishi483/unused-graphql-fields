@@ -1,6 +1,6 @@
 {
   "name": "unused-graphql-fields",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A package to detect unused GraphQL fields",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
