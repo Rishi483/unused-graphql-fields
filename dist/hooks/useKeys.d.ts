@@ -1,5 +1,5 @@
 export declare const useKeys: () => {
-    keys: import("@apollo/client").ReactiveVar<import("../types/ContextKeyType").ContextKeyType[]>;
-    keysSize: import("@apollo/client").ReactiveVar<import("../types/ContextType").KeySizeType[]>;
+    keys: import("@apollo/client").ReactiveVar<import("../lib/state").ContextKeyMapType>;
+    keysSize: import("@apollo/client").ReactiveVar<import("../lib/state").KeySizeMapType>;
 };
 //# sourceMappingURL=useKeys.d.ts.map

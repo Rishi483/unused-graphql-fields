@@ -2,38 +2,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.transformToGetters = transformToGetters;
 const prefixForKey_1 = require("./prefixForKey");
-const storeKeySize = (keyName, size, keysSize) => {
-    const isAlreadyPresent = keysSize().find((item) => item.key === keyName);
-    const newKeysSize = keysSize().map((item) => {
-        if (item.key === keyName)
-            return { ...item, size: item.size + size };
-        return item;
-    });
-    if (!isAlreadyPresent) {
-        newKeysSize.push({ key: keyName, size });
-    }
-    return newKeysSize;
-};
-const onKeyUsed = (keyName, source, keys) => {
-    const updatedkeys = keys().map((k) => {
-        if (k.key == keyName && k.source == source)
-            return { ...k, used: true };
-        return k;
-    });
-    return updatedkeys;
+const onKeyUsed = (keyName, keys) => {
+    const updatedKeys = new Map(keys());
+    const item = updatedKeys.get(keyName);
+    if (!item)
+        return updatedKeys;
+    updatedKeys.delete(keyName);
+    item.used = true;
+    updatedKeys.set(keyName, item);
+    return updatedKeys;
 };
 function storeSizeInKeysSize(obj, prefix, keysSize) {
     let cumulativeSize = 0;
     Object.keys(obj).forEach((key, index, array) => {
         const value = obj[key];
-        const prefixedKey = `${prefix}.${key}`;
+        const prefixedKey = (0, prefixForKey_1.prefixForKey)(prefix, key);
         let size = jsonSize(key);
         if (typeof value === "object" && value !== null) {
             if (Array.isArray(value)) {
                 let arrayItemsSize = 0;
                 value.forEach((item, itemIndex) => {
                     if (typeof item === "object" && item !== null) {
-                        arrayItemsSize += storeSizeInKeysSize(item, `${prefixedKey}`, keysSize);
+                        arrayItemsSize += storeSizeInKeysSize(item, prefixedKey, keysSize);
                     }
                     else {
                         arrayItemsSize += jsonSize(item);
@@ -48,12 +38,29 @@ function storeSizeInKeysSize(obj, prefix, keysSize) {
         else {
             size += jsonSize(value);
         }
-        const percentage = size;
-        keysSize(storeKeySize(prefixedKey, percentage, keysSize));
+        if (keysSize().has(prefixedKey)) {
+            const existingSize = keysSize().get(prefixedKey).size;
+            keysSize().set(prefixedKey, {
+                key: prefixedKey,
+                size: existingSize + size,
+            });
+        }
+        else {
+            keysSize().set(prefixedKey, { key: prefixedKey, size });
+        }
         cumulativeSize += size;
     });
     if (!prefix.includes(".")) {
-        keysSize(storeKeySize(prefix, cumulativeSize, keysSize));
+        if (keysSize().has(prefix)) {
+            const existingSize = keysSize().get(prefix).size;
+            keysSize().set(prefix, {
+                key: prefix,
+                size: existingSize + cumulativeSize,
+            });
+        }
+        else {
+            keysSize().set(prefix, { key: prefix, size: cumulativeSize });
+        }
     }
     return cumulativeSize;
 }
@@ -63,36 +70,37 @@ function transformToGetters({ jsonData, keys, source, keysSize, prefix, }) {
         storeSizeInKeysSize(jsonData, source, keysSize);
     }
     const result = {};
+    const processValue = (key, value, currentPrefix) => {
+        const prefixedKey = `${currentPrefix}${key}`;
+        if (Array.isArray(value)) {
+            return value.map((item) => typeof item === "object" && item !== null
+                ? transformToGetters({
+                    jsonData: item,
+                    keys,
+                    source,
+                    keysSize,
+                    prefix: (0, prefixForKey_1.prefixForKey)(prefixedKey),
+                })
+                : item);
+        }
+        else if (typeof value === "object" && value !== null) {
+            return transformToGetters({
+                jsonData: value,
+                keys,
+                source,
+                keysSize,
+                prefix: (0, prefixForKey_1.prefixForKey)(prefixedKey),
+            });
+        }
+        return value;
+    };
     Object.keys(jsonData).forEach((key) => {
         const value = jsonData[key];
-        const prefixedKey = `${prefix}${key}`;
+        const updatedValue = processValue(key, value, prefix);
         Object.defineProperty(result, key, {
             get: () => {
-                keys(onKeyUsed(prefixedKey, source, keys));
-                if (Array.isArray(value)) {
-                    return value.map((item) => {
-                        if (typeof item === "object" && item !== null) {
-                            return transformToGetters({
-                                jsonData: item,
-                                keys: keys,
-                                source: source,
-                                keysSize: keysSize,
-                                prefix: (0, prefixForKey_1.prefixForKey)(prefixedKey),
-                            });
-                        }
-                        return item;
-                    });
-                }
-                else if (typeof value === "object" && value !== null) {
-                    return transformToGetters({
-                        jsonData: value,
-                        keys: keys,
-                        source: source,
-                        keysSize: keysSize,
-                        prefix: (0, prefixForKey_1.prefixForKey)(prefixedKey),
-                    });
-                }
-                return value;
+                keys(onKeyUsed(`${prefix}${key}`, keys));
+                return updatedValue;
             },
             configurable: true,
             enumerable: true,

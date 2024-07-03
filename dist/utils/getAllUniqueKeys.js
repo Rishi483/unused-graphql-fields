@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllUniqueKeys = getAllUniqueKeys;
-const prefixForKey_1 = require("../utils/prefixForKey");
+const prefixForKey_1 = require("./prefixForKey");
 function getAllUniqueKeys(obj, source, prefix, keySet = new Set()) {
     if (prefix === undefined) {
         keySet.add({ key: source, source, used: true, stackTrace: [] });

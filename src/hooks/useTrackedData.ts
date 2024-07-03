@@ -28,7 +28,7 @@ const useTrackedData = function <TData, TVariables extends OperationVariables>(
 
   let updatedSource = source + "_" + uniqueIdentifier;
 
-  const proxyData: TData | undefined = useProxyData({
+  const proxyData: TData | undefined = useProxyData<TData>({
     data,
     updatedSource,
     stackTrace,

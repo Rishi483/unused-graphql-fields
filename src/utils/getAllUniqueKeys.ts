@@ -1,5 +1,5 @@
 import { ContextKeyType } from "../types/ContextKeyType";
-import {prefixForKey} from "../utils/prefixForKey"
+import {prefixForKey} from "./prefixForKey"
   
 export function getAllUniqueKeys(obj:any, source:string,prefix?:string, keySet = new Set<ContextKeyType>()):Set<ContextKeyType>{ 
 

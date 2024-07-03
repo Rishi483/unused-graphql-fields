@@ -22,8 +22,7 @@ const getCallingTrace = () => {
 };
 exports.getCallingTrace = getCallingTrace;
 function getHash(stackTrace) {
-    let indexOfCallingComponent = stackTrace.findIndex((line) => line.startsWith("useTrackedQuery") ||
-        line.startsWith("useTrackedLazyQuery")) + 1;
+    let indexOfCallingComponent = stackTrace.findIndex((line) => line.startsWith("useTrackedData")) + 2;
     const str = stackTrace[indexOfCallingComponent];
     let hashValue = 0;
     const prime = 31; // we can use any random prime number

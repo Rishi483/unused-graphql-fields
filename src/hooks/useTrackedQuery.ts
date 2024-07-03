@@ -19,7 +19,10 @@ const useTrackedQuery = function <
 
   const { data } = result;
 
-  const proxyData = useTrackedData<TData, TVariables>(data as TData, query);
+  const proxyData: TData | undefined = useTrackedData<TData, TVariables>(
+    data as TData,
+    query
+  );
 
   return { ...result, data: proxyData as TData };
 };

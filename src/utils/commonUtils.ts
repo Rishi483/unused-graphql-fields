@@ -21,9 +21,8 @@ export function getHash(stackTrace: string[]) {
   let indexOfCallingComponent =
     stackTrace.findIndex(
       (line) =>
-        line.startsWith("useTrackedQuery") ||
-        line.startsWith("useTrackedLazyQuery")
-    ) + 1;
+        line.startsWith("useTrackedData")
+    ) + 2;
   const str = stackTrace[indexOfCallingComponent];
 
   let hashValue = 0;

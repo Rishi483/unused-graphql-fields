@@ -55,11 +55,12 @@ const TreeViewRenderer = () => {
         setPaths(newPaths);
     }, [keys]);
     const isUnused = (keys, targetKey) => {
-        const item = keys.find((item) => item.key === targetKey);
+        const item = keys.get(targetKey);
         return item ? !item.used : false;
     };
     const getValue = (keysSize, targetKey) => {
-        return keysSize.find((item) => item.key === targetKey)?.size || 0;
+        const item = keysSize.get(targetKey);
+        return item ? item.size : 0;
     };
     const buildTree = (items) => {
         const roots = {};
@@ -106,10 +107,10 @@ const TreeViewRenderer = () => {
         return result;
     };
     const clearAllEntries = () => {
-        keysVar([]);
-        keysSizeVar([]);
-        setKeys([]);
-        setKeysSize([]);
+        keysVar(new Map());
+        keysSizeVar(new Map());
+        setKeys(new Map());
+        setKeysSize(new Map());
         setPaths([]);
         setTempSize([]);
     };
@@ -123,10 +124,18 @@ const TreeViewRenderer = () => {
     }, [keys, keysSize]);
     const nestedObject = transformToNestedObject(paths);
     const handleDelete = (id) => {
-        const updatedKeys = keys.filter((keyItem) => !keyItem.key.startsWith(id));
-        keysVar(updatedKeys);
-        const updatedKeysSize = keysSize.filter((keySizeItem) => !keySizeItem.key.startsWith(id));
-        keysSizeVar(updatedKeysSize);
+        keys.forEach((value, key) => {
+            if (key.startsWith(id)) {
+                keys.delete(key);
+            }
+        });
+        keysVar(keys);
+        keysSize.forEach((value, key) => {
+            if (key.startsWith(id)) {
+                keysSize.delete(key);
+            }
+        });
+        keysSizeVar(keysSize);
         const updatedPaths = paths.filter((path) => !path.startsWith(id));
         setPaths(updatedPaths);
     };

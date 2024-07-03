@@ -21,7 +21,10 @@ const useTrackedLazyQuery = function <
 
   const { data } = result;
 
-  const proxyData = useTrackedData(data as TData, query);
+  const proxyData: TData | undefined = useTrackedData<TData, TVariables>(
+    data as TData,
+    query
+  );
 
   return [getQuery, { ...result, data: proxyData as TData }];
 };

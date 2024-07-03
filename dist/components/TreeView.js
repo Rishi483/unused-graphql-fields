@@ -27,10 +27,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
+const useKeys_1 = require("../hooks/useKeys");
 const fa_1 = require("react-icons/fa");
 const fa_2 = require("react-icons/fa");
 const Modal_1 = __importDefault(require("./Modal"));
-const useKeys_1 = require("../hooks/useKeys");
+const prefixForKey_1 = require("../utils/prefixForKey");
 const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0)
         return "0 B";
@@ -40,20 +41,20 @@ const formatBytes = (bytes, decimals = 2) => {
     return (parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i]);
 };
 function getSizeOfPrefixedKey(keysSize, targetKey) {
-    return keysSize().find((item) => item.key === targetKey)?.size || 0;
+    return keysSize().get(targetKey)?.size || 0;
 }
 function getUnusedSum(tempSize, targetKey) {
     return tempSize?.find((item) => item.key === targetKey)?.sum || 0;
 }
 function isUnused(keys, targetKey) {
-    const item = keys().find((item) => item.key === targetKey);
+    const item = keys().get(targetKey);
     return item ? !item.used : false;
 }
 const buildPath = (currentPath, key) => {
-    return currentPath ? `${currentPath}.${key}` : key;
+    return currentPath ? (0, prefixForKey_1.prefixForKey)(currentPath, key) : key;
 };
 const getStackTrace = (keys, targetKey) => {
-    const stackTrace = keys().find((item) => item.key === targetKey)?.stackTrace;
+    const stackTrace = keys().get(targetKey)?.stackTrace;
     return stackTrace ? stackTrace : [];
 };
 const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootSize = -1, }) => {
@@ -62,10 +63,10 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
     const { keys, keysSize } = (0, useKeys_1.useKeys)();
     rootSize = rootSize === -1 ? getSizeOfPrefixedKey(keysSize, path) : rootSize;
     const curPathSize = getSizeOfPrefixedKey(keysSize, path);
-    const unusedPercentage = curPathSize == 0
+    const unusedPercentage = curPathSize === 0
         ? 0
         : ((getUnusedSum(tempSize, path) / curPathSize) * 100).toFixed(2);
-    const unUsedFlag = curPathSize == 0 ? true : isUnused(keys, path);
+    const unUsedFlag = curPathSize === 0 ? true : isUnused(keys, path);
     const areChildsPresent = Object.keys(data).length > 0;
     const stackTrace = !path.includes(".") ? getStackTrace(keys, path) : [];
     const handleDelete = () => {
@@ -146,7 +147,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
             } }, Object.keys(data).map((key) => {
             const fullPath = buildPath(path, key);
             return (react_1.default.createElement("li", { key: key, style: { marginTop: "4px" } },
-                react_1.default.createElement(TreeView, { data: data[key], tempSize: tempSize, title: key, path: fullPath, rootSize: rootSize, onDelete: onDelete })));
+                react_1.default.createElement(TreeView, { data: data[key], tempSize: tempSize, title: key, path: fullPath, rootSize: rootSize, onDelete: () => { } })));
         }))) : null,
         react_1.default.createElement(Modal_1.default, { isOpen: modalIsOpen, onClose: closeModal, contentLabel: "Stack Trace" },
             react_1.default.createElement("div", { style: {
