@@ -3,19 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const getAllUniqueKeys_1 = require("../utils/getAllUniqueKeys");
 const transformToGetters_1 = require("../utils/transformToGetters");
 const react_1 = require("react");
-const useKeys_1 = require("./useKeys");
+const state_1 = require("../lib/state");
 const useProxyData = function ({ data, updatedSource, stackTrace, }) {
-    const { keys, keysSize } = (0, useKeys_1.useKeys)();
     const proxyData = (0, react_1.useMemo)(() => {
         if (!data)
             return undefined;
-        const updatedKeys = new Map(keys());
+        const updatedKeys = new Map((0, state_1.keys)());
         updatedKeys.forEach((item, key) => {
             if (item.source === updatedSource) {
                 updatedKeys.delete(key);
             }
         });
-        const updatedKeysSize = new Map(keysSize());
+        const updatedKeysSize = new Map((0, state_1.keysSize)());
         updatedKeysSize.forEach((item, key) => {
             if (key.startsWith(updatedSource)) {
                 updatedKeysSize.delete(key);
@@ -32,13 +31,13 @@ const useProxyData = function ({ data, updatedSource, stackTrace, }) {
                 });
             }
         });
-        keys(updatedKeys);
-        keysSize(updatedKeysSize);
+        (0, state_1.keys)(updatedKeys);
+        (0, state_1.keysSize)(updatedKeysSize);
         return (0, transformToGetters_1.transformToGetters)({
             jsonData: data,
-            keys,
+            keys: state_1.keys,
             source: updatedSource,
-            keysSize,
+            keysSize: state_1.keysSize,
         });
     }, [data, updatedSource]);
     return proxyData;

@@ -21,7 +21,7 @@ const useTrackedData = function <TData, TVariables extends OperationVariables>(
   const stackTrace = useMemo(() => getCallingTrace(), []);
 
   const uniqueIdentifier = useMemo(() => {
-    return process.env.NEXT_PUBLIC_MODE === "development"
+    return process.env.NODE_ENV === "development"
       ? getHash(stackTrace)
       : id;
   }, [stackTrace, id]);

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useKeys } from "../hooks/useKeys";
+import { keys, keysSize } from "../lib/state";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import Modal from "./Modal";
-import { ReactiveVar } from "@apollo/client";
-import { ContextKeyMapType, KeySizeMapType } from "../lib/state"; 
 import { prefixForKey } from "../utils/prefixForKey";
 
 interface TempSize {
@@ -35,10 +33,7 @@ const formatBytes = (bytes: number, decimals = 2): string => {
   );
 };
 
-function getSizeOfPrefixedKey(
-  keysSize: ReactiveVar<KeySizeMapType>,
-  targetKey: string
-): number {
+function getSizeOfPrefixedKey(targetKey: string): number {
   return keysSize().get(targetKey)?.size || 0;
 }
 
@@ -46,22 +41,16 @@ function getUnusedSum(tempSize: TempSize[], targetKey: string): number {
   return tempSize?.find((item) => item.key === targetKey)?.sum || 0;
 }
 
-function isUnused(
-  keys: ReactiveVar<ContextKeyMapType>,
-  targetKey: string
-): boolean {
+function isUnused(targetKey: string): boolean {
   const item = keys().get(targetKey);
   return item ? !item.used : false;
 }
 
 const buildPath = (currentPath: string, key: string): string => {
-  return currentPath ? prefixForKey(currentPath,key) : key;
+  return currentPath ? prefixForKey(currentPath, key) : key;
 };
 
-const getStackTrace = (
-  keys: ReactiveVar<ContextKeyMapType>,
-  targetKey: string
-): string[] => {
+const getStackTrace = (targetKey: string): string[] => {
   const stackTrace = keys().get(targetKey)?.stackTrace;
   return stackTrace ? stackTrace : [];
 };
@@ -77,16 +66,15 @@ const TreeView: React.FC<TreeNodeProps> = ({
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const { keys, keysSize } = useKeys();
-  rootSize = rootSize === -1 ? getSizeOfPrefixedKey(keysSize, path) : rootSize;
-  const curPathSize = getSizeOfPrefixedKey(keysSize, path);
+  rootSize = rootSize === -1 ? getSizeOfPrefixedKey(path) : rootSize;
+  const curPathSize = getSizeOfPrefixedKey(path);
   const unusedPercentage =
     curPathSize === 0
       ? 0
       : ((getUnusedSum(tempSize, path) / curPathSize) * 100).toFixed(2);
-  const unUsedFlag = curPathSize === 0 ? true : isUnused(keys, path);
+  const unUsedFlag = curPathSize === 0 ? true : isUnused(path);
   const areChildsPresent = Object.keys(data).length > 0;
-  const stackTrace = !path.includes(".") ? getStackTrace(keys, path) : [];
+  const stackTrace = !path.includes(".") ? getStackTrace(path) : [];
 
   const handleDelete = () => {
     if (stackTrace.length > 0) {

@@ -9,15 +9,15 @@
 npm install unused-graphql-fields
 ```
 ## Environment Setup
-To ensure the proper functionality of the hook, it is essential to set up an environment variable named `NEXT_PUBLIC_MODE`. This variable should be configured to either "development" or "production" based on your current environment.
+To ensure the proper functionality of the hook, it is essential to set up an environment variable named `NODE_ENV`. This variable should be configured to either "development" or "production" based on your current environment.
 
 In your .env.local file:
 ```
- NEXT_PUBLIC_MODE="development"
+ NODE_ENV="development"
 ```
 or
 ```
-NEXT_PUBLIC_MODE="production"
+NODE_ENV="production"
 ```
 
 ## Usage

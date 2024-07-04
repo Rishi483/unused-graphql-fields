@@ -2,7 +2,7 @@ import { SourceType } from "../types/SourceType";
 import { getAllUniqueKeys } from "../utils/getAllUniqueKeys";
 import { transformToGetters } from "../utils/transformToGetters";
 import { useMemo } from "react";
-import { useKeys } from "./useKeys";
+import { keys, keysSize } from "../lib/state";
 
 interface PropsType<TData> {
   data: TData;
@@ -15,8 +15,6 @@ const useProxyData = function <TData>({
   updatedSource,
   stackTrace,
 }: PropsType<TData>): TData {
-  const { keys, keysSize } = useKeys();
-
   const proxyData = useMemo(() => {
     if (!data) return undefined;
 

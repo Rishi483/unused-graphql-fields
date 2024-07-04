@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TreeView from "./TreeView";
-import { useKeys } from "../hooks/useKeys";
+import { keys as keysVar, keysSize as keysSizeVar } from "../lib/state";
 import { prefixForKey } from "../utils/prefixForKey";
 import { ContextKeyMapType, KeySizeMapType } from "../lib/state";
 
@@ -16,7 +16,6 @@ interface Node {
 }
 
 const TreeViewRenderer: React.FC = () => {
-  const { keys: keysVar, keysSize: keysSizeVar } = useKeys();
   const [keys, setKeys] = useState<ContextKeyMapType>(keysVar());
   const [keysSize, setKeysSize] = useState<KeySizeMapType>(keysSizeVar());
   const [paths, setPaths] = useState<string[]>([]);

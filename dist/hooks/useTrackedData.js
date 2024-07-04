@@ -13,7 +13,7 @@ const useTrackedData = function (data, query) {
     let source = (0, react_1.useMemo)(() => (0, getSourceFromQuery_1.getSourceFromQuery)(query), [query]);
     const stackTrace = (0, react_1.useMemo)(() => (0, commonUtils_1.getCallingTrace)(), []);
     const uniqueIdentifier = (0, react_1.useMemo)(() => {
-        return process.env.NEXT_PUBLIC_MODE === "development"
+        return process.env.NODE_ENV === "development"
             ? (0, commonUtils_2.getHash)(stackTrace)
             : id;
     }, [stackTrace, id]);

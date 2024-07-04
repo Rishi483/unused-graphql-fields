@@ -28,23 +28,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const TreeView_1 = __importDefault(require("./TreeView"));
-const useKeys_1 = require("../hooks/useKeys");
+const state_1 = require("../lib/state");
 const prefixForKey_1 = require("../utils/prefixForKey");
 const TreeViewRenderer = () => {
-    const { keys: keysVar, keysSize: keysSizeVar } = (0, useKeys_1.useKeys)();
-    const [keys, setKeys] = (0, react_1.useState)(keysVar());
-    const [keysSize, setKeysSize] = (0, react_1.useState)(keysSizeVar());
+    const [keys, setKeys] = (0, react_1.useState)((0, state_1.keys)());
+    const [keysSize, setKeysSize] = (0, react_1.useState)((0, state_1.keysSize)());
     const [paths, setPaths] = (0, react_1.useState)([]);
     const [tempSize, setTempSize] = (0, react_1.useState)([]);
     (0, react_1.useEffect)(() => {
         const interval = setInterval(() => {
-            const newKeys = keysVar();
-            const newKeysSize = keysSizeVar();
+            const newKeys = (0, state_1.keys)();
+            const newKeysSize = (0, state_1.keysSize)();
             setKeys(newKeys);
             setKeysSize(newKeysSize);
         }, 2000);
         return () => clearInterval(interval);
-    }, [keysVar, keysSizeVar]);
+    }, [state_1.keys, state_1.keysSize]);
     (0, react_1.useEffect)(() => {
         const newPaths = [];
         keys.forEach((keyObject) => {
@@ -107,8 +106,8 @@ const TreeViewRenderer = () => {
         return result;
     };
     const clearAllEntries = () => {
-        keysVar(new Map());
-        keysSizeVar(new Map());
+        (0, state_1.keys)(new Map());
+        (0, state_1.keysSize)(new Map());
         setKeys(new Map());
         setKeysSize(new Map());
         setPaths([]);
@@ -129,13 +128,13 @@ const TreeViewRenderer = () => {
                 keys.delete(key);
             }
         });
-        keysVar(keys);
+        (0, state_1.keys)(keys);
         keysSize.forEach((value, key) => {
             if (key.startsWith(id)) {
                 keysSize.delete(key);
             }
         });
-        keysSizeVar(keysSize);
+        (0, state_1.keysSize)(keysSize);
         const updatedPaths = paths.filter((path) => !path.startsWith(id));
         setPaths(updatedPaths);
     };
