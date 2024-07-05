@@ -88,7 +88,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
-  const [hoverState, setHoverState] = useState(false);
+  const [hoverState,setHoverState]=useState(false);
 
   return (
     <div
@@ -108,13 +108,13 @@ const TreeView: React.FC<TreeNodeProps> = ({
             color: unUsedFlag ? "#9E9E9E" : "#424242",
             display: "flex",
             alignItems: "center",
-            border: `1px solid ${hoverState ? "black" : "gray"}`,
+            border: `1px solid ${hoverState ? 'black' : 'gray'}`,
             padding: "6px 8px",
             borderRadius: "5px",
             transition: "all 0.5s ease",
           }}
-          onMouseEnter={() => setHoverState(true)}
-          onMouseLeave={() => setHoverState(false)}
+          onMouseEnter={()=>setHoverState(true)}
+          onMouseLeave={()=>setHoverState(false)}
         >
           <span style={{ marginRight: "4px", marginTop: "4px" }}>
             {areChildsPresent ? (
@@ -228,7 +228,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
         <div
           style={{
             fontFamily: "system-ui, Tahoma, Geneva, Verdana, sans-serif",
-            fontSize: "12px",
+            fontSize: "14px",
             lineHeight: "1.2",
             color: "#333",
             display: "flex",
@@ -244,7 +244,8 @@ const TreeView: React.FC<TreeNodeProps> = ({
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-                background: "#E9F0FE",
+                justifyContent:"space-between",
+                border:"1px solid gray",
                 padding: "10px",
                 margin: "4px",
                 borderRadius: "3px",

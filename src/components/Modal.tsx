@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { MdOutlineClose } from "react-icons/md";
 
@@ -15,6 +15,25 @@ const Modal: React.FC<ModalProps> = ({
   contentLabel,
   children,
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
@@ -34,6 +53,7 @@ const Modal: React.FC<ModalProps> = ({
       }}
     >
       <div
+        ref={modalRef}
         style={{
           position: "relative",
           backgroundColor: "white",
@@ -50,7 +70,7 @@ const Modal: React.FC<ModalProps> = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid #eee",
+            margin:"5px 8px 5px 8px"
           }}
         >
           <h2 style={{ margin: 0, color: "black", fontSize: "1.5em" }}>{contentLabel}</h2>

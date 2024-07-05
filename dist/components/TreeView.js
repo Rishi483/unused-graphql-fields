@@ -77,6 +77,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
     };
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
+    const [hoverState, setHoverState] = (0, react_1.useState)(false);
     return (react_1.default.createElement("div", { style: {
             fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
             fontSize: "14px",
@@ -88,11 +89,11 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                 color: unUsedFlag ? "#9E9E9E" : "#424242",
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "#E9F0FE",
+                border: `1px solid ${hoverState ? 'black' : 'gray'}`,
                 padding: "6px 8px",
                 borderRadius: "5px",
-                transition: "background-color 0.3s ease",
-            } },
+                transition: "all 0.5s ease",
+            }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) },
             react_1.default.createElement("span", { style: { marginRight: "4px", marginTop: "4px" } }, areChildsPresent ? (expanded ? (react_1.default.createElement(fa_1.FaChevronDown, { style: { marginTop: "3px" } })) : (react_1.default.createElement(fa_1.FaChevronRight, null))) : ("")),
             react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } }, title),
             react_1.default.createElement("div", { style: {
@@ -111,15 +112,15 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                         borderRadius: "6px",
                         padding: "5px 10px",
                         position: "absolute",
-                        zIndex: 1,
+                        zIndex: 3,
                         bottom: "25%",
                         right: "100%",
                         marginLeft: "-80px",
                         opacity: hoveredTooltip ? 1 : 0,
-                        transition: "opacity 0.3s",
+                        transition: "all 0.3s",
                         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
                         fontSize: "12px",
-                        boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
+                        boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)",
                     } },
                     unusedPercentage,
                     "% unused of ",
@@ -150,7 +151,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
         react_1.default.createElement(Modal_1.default, { isOpen: modalIsOpen, onClose: closeModal, contentLabel: "Stack Trace" },
             react_1.default.createElement("div", { style: {
                     fontFamily: "system-ui, Tahoma, Geneva, Verdana, sans-serif",
-                    fontSize: "12px",
+                    fontSize: "14px",
                     lineHeight: "1.2",
                     color: "#333",
                     display: "flex",
@@ -162,7 +163,8 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                     width: "100%",
                     display: "flex",
                     alignItems: "center",
-                    background: "#E9F0FE",
+                    justifyContent: "space-between",
+                    border: "1px solid gray",
                     padding: "10px",
                     margin: "4px",
                     borderRadius: "3px",

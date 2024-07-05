@@ -143,27 +143,15 @@ const TreeViewRenderer = () => {
                 e.stopPropagation();
                 clearAllEntries();
             }, style: {
-                display: "flex",
-                alignItems: "center",
-                padding: "5px 10px",
-                border: "2px solid red",
-                borderRadius: "20px",
-                fontFamily: "Arial, sans-serif",
+                backgroundColor: "#c01f54",
+                color: "white",
+                border: "none",
+                padding: "7px 13px",
+                borderRadius: "8px",
                 fontSize: "14px",
-                color: "#212121",
-                backgroundColor: "white",
                 cursor: "pointer",
-                marginTop: "10px",
-                marginBottom: "10px"
-            } },
-            react_1.default.createElement("span", { style: {
-                    height: "10px",
-                    width: "10px",
-                    backgroundColor: "red",
-                    borderRadius: "50%",
-                    marginRight: "5px",
-                } }),
-            "Clear"),
+                margin: "6px 0",
+            } }, "Clear All"),
         Object.keys(nestedObject).map((item) => (react_1.default.createElement(TreeView_1.default, { key: item, onDelete: handleDelete, tempSize: tempSize, title: item.split("_")[0], path: item, data: nestedObject[item] })))));
 };
 exports.default = TreeViewRenderer;
