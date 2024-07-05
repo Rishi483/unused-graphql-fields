@@ -148,24 +148,29 @@ const TreeViewRenderer: React.FC = () => {
     const updatedPaths = paths.filter((path) => !path.startsWith(id));
     setPaths(updatedPaths);
   };
-
+  const [hoverState, setHoverState] = useState(false);
   return (
-    <div style={{ width: "600px", maxHeight: "600px" }}>
+    <div style={{ width: "100%", maxHeight: "600px" }}>
       <button
         onClick={(e) => {
           e.stopPropagation();
           clearAllEntries();
         }}
         style={{
-          backgroundColor: "#c01f54",
-          color: "white",
-          border: "none",
+          color: hoverState ? "red" : "black",
+          border: `1px solid ${hoverState ? "red" : "gray"}`,
           padding: "7px 13px",
-          borderRadius: "8px",
+          borderRadius: "4px",
           fontSize: "14px",
           cursor: "pointer",
           margin: "6px 0",
+          backgroundColor: "#fff",
+          transition: "all 0.3s ease",
+          fontFamily:
+            "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
         }}
+        onMouseEnter={() => setHoverState(true)}
+        onMouseLeave={() => setHoverState(false)}
       >
         Clear All
       </button>

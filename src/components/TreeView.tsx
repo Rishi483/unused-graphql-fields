@@ -67,7 +67,6 @@ const TreeView: React.FC<TreeNodeProps> = ({
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [hoveredTooltip, setHoveredTooltip] = useState<boolean>(false);
 
   rootSize = rootSize === -1 ? getSizeOfPrefixedKey(path) : rootSize;
   const curPathSize = getSizeOfPrefixedKey(path);
@@ -88,7 +87,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
-  const [hoverState,setHoverState]=useState(false);
+  const [hoverState, setHoverState] = useState(false);
 
   return (
     <div
@@ -108,13 +107,13 @@ const TreeView: React.FC<TreeNodeProps> = ({
             color: unUsedFlag ? "#9E9E9E" : "#424242",
             display: "flex",
             alignItems: "center",
-            border: `1px solid ${hoverState ? 'black' : 'gray'}`,
+            border: `1px solid ${hoverState ? "black" : "gray"}`,
             padding: "6px 8px",
             borderRadius: "5px",
             transition: "all 0.5s ease",
           }}
-          onMouseEnter={()=>setHoverState(true)}
-          onMouseLeave={()=>setHoverState(false)}
+          onMouseEnter={() => setHoverState(true)}
+          onMouseLeave={() => setHoverState(false)}
         >
           <span style={{ marginRight: "4px", marginTop: "4px" }}>
             {areChildsPresent ? (
@@ -127,46 +126,12 @@ const TreeView: React.FC<TreeNodeProps> = ({
               ""
             )}
           </span>
-          <span style={{ fontWeight: "bold", flex: 1 }}>{title}</span>
-          <div
-            style={{
-              position: "relative",
-              display: "inline-block",
-              cursor: "pointer",
-              margin: 0,
-            }}
-            onMouseEnter={() => setHoveredTooltip(true)}
-            onMouseLeave={() => setHoveredTooltip(false)}
-          >
-            <MdInfoOutline
-              fontSize="1.2rem"
-              style={{ marginTop: "4px", color: "black" }}
-            />
-            <span
-              style={{
-                visibility: hoveredTooltip ? "visible" : "hidden",
-                width: "200px",
-                backgroundColor: "#eef0f1",
-                color: "black",
-                textAlign: "center",
-                borderRadius: "6px",
-                padding: "5px 10px",
-                position: "absolute",
-                zIndex: 3,
-                bottom: "25%",
-                right: "100%",
-                marginLeft: "-80px",
-                opacity: hoveredTooltip ? 1 : 0,
-                transition: "all 0.3s",
-                fontFamily:
-                  "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
-                fontSize: "12px",
-                boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              {unusedPercentage}% unused of {formatBytes(curPathSize)}
+          <span style={{ fontWeight: "bold", flex: 1 }}>
+            {title}{" "}
+            <span style={{ fontWeight: "normal" }}>
+              ({unusedPercentage}% unused of {formatBytes(curPathSize)})
             </span>
-          </div>
+          </span>
           {stackTrace.length > 0 && (
             <div
               style={{
@@ -181,7 +146,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
                   e.stopPropagation();
                   openModal();
                 }}
-                fontSize="1.1rem"
+                fontSize="1.4rem"
                 style={{ color: "black" }}
               />
               <MdDeleteOutline
@@ -189,7 +154,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
                   e.stopPropagation();
                   handleDelete();
                 }}
-                fontSize="1.1rem"
+                fontSize="1.5rem"
               />
             </div>
           )}
@@ -244,8 +209,8 @@ const TreeView: React.FC<TreeNodeProps> = ({
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-                justifyContent:"space-between",
-                border:"1px solid gray",
+                justifyContent: "space-between",
+                border: "1px solid gray",
                 padding: "10px",
                 margin: "4px",
                 borderRadius: "3px",

@@ -59,7 +59,7 @@ const Modal = ({ isOpen, onClose, contentLabel, children, }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 1000,
+            zIndex: 9999999,
             fontFamily: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
         } },
         react_1.default.createElement("div", { ref: modalRef, style: {
@@ -76,7 +76,7 @@ const Modal = ({ isOpen, onClose, contentLabel, children, }) => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    margin: "5px 8px 5px 8px"
+                    margin: "5px 8px 5px 8px",
                 } },
                 react_1.default.createElement("h2", { style: { margin: 0, color: "black", fontSize: "1.5em" } }, contentLabel),
                 react_1.default.createElement("button", { onClick: onClose, style: {

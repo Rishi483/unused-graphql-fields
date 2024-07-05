@@ -48,8 +48,9 @@ const Modal: React.FC<ModalProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        zIndex: 1000,
-        fontFamily: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
+        zIndex: 9999999,
+        fontFamily:
+          "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
       }}
     >
       <div
@@ -70,10 +71,12 @@ const Modal: React.FC<ModalProps> = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            margin:"5px 8px 5px 8px"
+            margin: "5px 8px 5px 8px",
           }}
         >
-          <h2 style={{ margin: 0, color: "black", fontSize: "1.5em" }}>{contentLabel}</h2>
+          <h2 style={{ margin: 0, color: "black", fontSize: "1.5em" }}>
+            {contentLabel}
+          </h2>
           <button
             onClick={onClose}
             style={{

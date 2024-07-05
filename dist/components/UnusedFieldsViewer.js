@@ -48,6 +48,7 @@ const UnusedFieldsViewer = () => {
                 minHeight: "100px",
                 overflow: "scroll",
                 transition: "all 0.3s ease",
+                width: "600px",
             } },
             react_1.default.createElement(TreeViewRenderer_1.default, null)),
         react_1.default.createElement("div", { style: {

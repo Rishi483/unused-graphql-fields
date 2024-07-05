@@ -138,20 +138,23 @@ const TreeViewRenderer = () => {
         const updatedPaths = paths.filter((path) => !path.startsWith(id));
         setPaths(updatedPaths);
     };
-    return (react_1.default.createElement("div", { style: { width: "600px", maxHeight: "600px" } },
+    const [hoverState, setHoverState] = (0, react_1.useState)(false);
+    return (react_1.default.createElement("div", { style: { width: "100%", maxHeight: "600px" } },
         react_1.default.createElement("button", { onClick: (e) => {
                 e.stopPropagation();
                 clearAllEntries();
             }, style: {
-                backgroundColor: "#c01f54",
-                color: "white",
-                border: "none",
+                color: hoverState ? "red" : "black",
+                border: `1px solid ${hoverState ? "red" : "gray"}`,
                 padding: "7px 13px",
-                borderRadius: "8px",
+                borderRadius: "4px",
                 fontSize: "14px",
                 cursor: "pointer",
                 margin: "6px 0",
-            } }, "Clear All"),
+                backgroundColor: "#fff",
+                transition: "all 0.3s ease",
+                fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+            }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) }, "Clear All"),
         Object.keys(nestedObject).map((item) => (react_1.default.createElement(TreeView_1.default, { key: item, onDelete: handleDelete, tempSize: tempSize, title: item.split("_")[0], path: item, data: nestedObject[item] })))));
 };
 exports.default = TreeViewRenderer;

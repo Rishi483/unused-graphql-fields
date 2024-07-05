@@ -61,7 +61,6 @@ const getStackTrace = (targetKey) => {
 const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootSize = -1, }) => {
     const [expanded, setExpanded] = (0, react_1.useState)(false);
     const [modalIsOpen, setModalIsOpen] = (0, react_1.useState)(false);
-    const [hoveredTooltip, setHoveredTooltip] = (0, react_1.useState)(false);
     rootSize = rootSize === -1 ? getSizeOfPrefixedKey(path) : rootSize;
     const curPathSize = getSizeOfPrefixedKey(path);
     const unusedPercentage = curPathSize === 0
@@ -89,42 +88,21 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                 color: unUsedFlag ? "#9E9E9E" : "#424242",
                 display: "flex",
                 alignItems: "center",
-                border: `1px solid ${hoverState ? 'black' : 'gray'}`,
+                border: `1px solid ${hoverState ? "black" : "gray"}`,
                 padding: "6px 8px",
                 borderRadius: "5px",
                 transition: "all 0.5s ease",
             }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) },
             react_1.default.createElement("span", { style: { marginRight: "4px", marginTop: "4px" } }, areChildsPresent ? (expanded ? (react_1.default.createElement(fa_1.FaChevronDown, { style: { marginTop: "3px" } })) : (react_1.default.createElement(fa_1.FaChevronRight, null))) : ("")),
-            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } }, title),
-            react_1.default.createElement("div", { style: {
-                    position: "relative",
-                    display: "inline-block",
-                    cursor: "pointer",
-                    margin: 0,
-                }, onMouseEnter: () => setHoveredTooltip(true), onMouseLeave: () => setHoveredTooltip(false) },
-                react_1.default.createElement(md_1.MdInfoOutline, { fontSize: "1.2rem", style: { marginTop: "4px", color: "black" } }),
-                react_1.default.createElement("span", { style: {
-                        visibility: hoveredTooltip ? "visible" : "hidden",
-                        width: "200px",
-                        backgroundColor: "#eef0f1",
-                        color: "black",
-                        textAlign: "center",
-                        borderRadius: "6px",
-                        padding: "5px 10px",
-                        position: "absolute",
-                        zIndex: 3,
-                        bottom: "25%",
-                        right: "100%",
-                        marginLeft: "-80px",
-                        opacity: hoveredTooltip ? 1 : 0,
-                        transition: "all 0.3s",
-                        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
-                        fontSize: "12px",
-                        boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)",
-                    } },
+            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } },
+                title,
+                " ",
+                react_1.default.createElement("span", { style: { fontWeight: "normal" } },
+                    "(",
                     unusedPercentage,
                     "% unused of ",
-                    formatBytes(curPathSize))),
+                    formatBytes(curPathSize),
+                    ")")),
             stackTrace.length > 0 && (react_1.default.createElement("div", { style: {
                     display: "flex",
                     alignItems: "center",
@@ -134,11 +112,11 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                 react_1.default.createElement(go_1.GoStack, { onClick: (e) => {
                         e.stopPropagation();
                         openModal();
-                    }, fontSize: "1.1rem", style: { color: "black" } }),
+                    }, fontSize: "1.4rem", style: { color: "black" } }),
                 react_1.default.createElement(md_1.MdDeleteOutline, { onClick: (e) => {
                         e.stopPropagation();
                         handleDelete();
-                    }, fontSize: "1.1rem" }))))),
+                    }, fontSize: "1.5rem" }))))),
         (areChildsPresent && expanded) || isRoot ? (react_1.default.createElement("ul", { style: {
                 listStyleType: "none",
                 paddingLeft: "12px",
