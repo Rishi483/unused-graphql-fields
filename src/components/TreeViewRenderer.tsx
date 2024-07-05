@@ -157,30 +157,17 @@ const TreeViewRenderer: React.FC = () => {
           clearAllEntries();
         }}
         style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "5px 10px",
-          border: "2px solid red",
-          borderRadius: "20px",
-          fontFamily: "Arial, sans-serif",
+          backgroundColor: "#c01f54",
+          color: "white",
+          border: "none",
+          padding: "7px 13px",
+          borderRadius: "8px",
           fontSize: "14px",
-          color: "#212121",
-          backgroundColor: "white",
           cursor: "pointer",
-          marginTop: "10px",
-          marginBottom:"10px"
+          margin: "6px 0",
         }}
       >
-        <span
-          style={{
-            height: "10px",
-            width: "10px",
-            backgroundColor: "red",
-            borderRadius: "50%",
-            marginRight: "5px",
-          }}
-        ></span>
-        Clear
+        Clear All
       </button>
 
       {Object.keys(nestedObject).map((item) => (

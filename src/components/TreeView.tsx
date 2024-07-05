@@ -88,6 +88,8 @@ const TreeView: React.FC<TreeNodeProps> = ({
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
+  const [hoverState, setHoverState] = useState(false);
+
   return (
     <div
       style={{
@@ -106,11 +108,13 @@ const TreeView: React.FC<TreeNodeProps> = ({
             color: unUsedFlag ? "#9E9E9E" : "#424242",
             display: "flex",
             alignItems: "center",
-            backgroundColor: "#E9F0FE",
+            border: `1px solid ${hoverState ? "black" : "gray"}`,
             padding: "6px 8px",
             borderRadius: "5px",
-            transition: "background-color 0.3s ease",
+            transition: "all 0.5s ease",
           }}
+          onMouseEnter={() => setHoverState(true)}
+          onMouseLeave={() => setHoverState(false)}
         >
           <span style={{ marginRight: "4px", marginTop: "4px" }}>
             {areChildsPresent ? (
@@ -148,16 +152,16 @@ const TreeView: React.FC<TreeNodeProps> = ({
                 borderRadius: "6px",
                 padding: "5px 10px",
                 position: "absolute",
-                zIndex: 1,
+                zIndex: 3,
                 bottom: "25%",
                 right: "100%",
                 marginLeft: "-80px",
                 opacity: hoveredTooltip ? 1 : 0,
-                transition: "opacity 0.3s",
+                transition: "all 0.3s",
                 fontFamily:
                   "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
                 fontSize: "12px",
-                boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
+                boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)",
               }}
             >
               {unusedPercentage}% unused of {formatBytes(curPathSize)}

@@ -154,6 +154,7 @@ const TreeViewRenderer = () => {
                 backgroundColor: "white",
                 cursor: "pointer",
                 marginTop: "10px",
+                marginBottom: "10px"
             } },
             react_1.default.createElement("span", { style: {
                     height: "10px",
