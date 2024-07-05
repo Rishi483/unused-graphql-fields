@@ -29,7 +29,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const state_1 = require("../lib/state");
 const fa_1 = require("react-icons/fa");
-const fa_2 = require("react-icons/fa");
+const md_1 = require("react-icons/md");
+const go_1 = require("react-icons/go");
 const Modal_1 = __importDefault(require("./Modal"));
 const prefixForKey_1 = require("../utils/prefixForKey");
 const formatBytes = (bytes, decimals = 2) => {
@@ -60,6 +61,7 @@ const getStackTrace = (targetKey) => {
 const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootSize = -1, }) => {
     const [expanded, setExpanded] = (0, react_1.useState)(false);
     const [modalIsOpen, setModalIsOpen] = (0, react_1.useState)(false);
+    const [hoveredTooltip, setHoveredTooltip] = (0, react_1.useState)(false);
     rootSize = rootSize === -1 ? getSizeOfPrefixedKey(path) : rootSize;
     const curPathSize = getSizeOfPrefixedKey(path);
     const unusedPercentage = curPathSize === 0
@@ -76,69 +78,66 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
     return (react_1.default.createElement("div", { style: {
-            fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+            fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
             fontSize: "14px",
-            color: "#333",
-            marginLeft: "20px",
-            lineHeight: "1.5",
-            padding: "4px",
-            margin: "5px 0",
-            backgroundColor: isRoot ? "#F1F8FF" : "#FFFFFF",
-            borderLeft: isRoot ? "5px solid #2196F3" : "3px solid #BBDEFB",
-            paddingLeft: isRoot ? "8px" : "12px",
-            borderRadius: "4px",
-            minHeight: "25px",
+            margin: "0.5rem 0",
+            color: "black",
         } },
         !isRoot && (react_1.default.createElement("div", { onClick: () => setExpanded(!expanded), style: {
                 cursor: "pointer",
                 color: unUsedFlag ? "#9E9E9E" : "#424242",
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "#E3F2FD",
+                backgroundColor: "#E9F0FE",
                 padding: "6px 8px",
-                borderRadius: "6px",
+                borderRadius: "5px",
                 transition: "background-color 0.3s ease",
             } },
-            react_1.default.createElement("span", { style: { marginRight: "4px" } }, areChildsPresent ? (expanded ? (react_1.default.createElement(fa_2.FaChevronDown, null)) : (react_1.default.createElement(fa_1.FaChevronRight, null))) : ("")),
-            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } },
-                title,
+            react_1.default.createElement("span", { style: { marginRight: "4px", marginTop: "4px" } }, areChildsPresent ? (expanded ? (react_1.default.createElement(fa_1.FaChevronDown, { style: { marginTop: "3px" } })) : (react_1.default.createElement(fa_1.FaChevronRight, null))) : ("")),
+            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } }, title),
+            react_1.default.createElement("div", { style: {
+                    position: "relative",
+                    display: "inline-block",
+                    cursor: "pointer",
+                    margin: 0,
+                }, onMouseEnter: () => setHoveredTooltip(true), onMouseLeave: () => setHoveredTooltip(false) },
+                react_1.default.createElement(md_1.MdInfoOutline, { fontSize: "1.2rem", style: { marginTop: "4px", color: "black" } }),
                 react_1.default.createElement("span", { style: {
-                        marginLeft: "8px",
+                        visibility: hoveredTooltip ? "visible" : "hidden",
+                        width: "200px",
+                        backgroundColor: "#eef0f1",
+                        color: "black",
+                        textAlign: "center",
+                        borderRadius: "6px",
+                        padding: "5px 10px",
+                        position: "absolute",
+                        zIndex: 1,
+                        bottom: "25%",
+                        right: "100%",
+                        marginLeft: "-80px",
+                        opacity: hoveredTooltip ? 1 : 0,
+                        transition: "opacity 0.3s",
+                        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
                         fontSize: "12px",
-                        color: unUsedFlag ? "#9E9E9E" : "#616161",
+                        boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
                     } },
-                    "(",
                     unusedPercentage,
                     "% unused of ",
-                    formatBytes(curPathSize),
-                    ")")),
-            stackTrace.length > 0 && (react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement("button", { onClick: (e) => {
+                    formatBytes(curPathSize))),
+            stackTrace.length > 0 && (react_1.default.createElement("div", { style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    marginLeft: "10px",
+                } },
+                react_1.default.createElement(go_1.GoStack, { onClick: (e) => {
                         e.stopPropagation();
                         openModal();
-                    }, style: {
-                        marginLeft: "12px",
-                        padding: "2px 4px",
-                        fontSize: "12px",
-                        color: "#FFFFFF",
-                        backgroundColor: "#4CAF50",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                    } }, "View StackTrace"),
-                react_1.default.createElement("button", { onClick: (e) => {
+                    }, fontSize: "1.1rem", style: { color: "black" } }),
+                react_1.default.createElement(md_1.MdDeleteOutline, { onClick: (e) => {
                         e.stopPropagation();
                         handleDelete();
-                    }, style: {
-                        marginLeft: "12px",
-                        padding: "2px 4px",
-                        fontSize: "12px",
-                        color: "#FFFFFF",
-                        backgroundColor: "#f44336",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                    } }, "Remove"))))),
+                    }, fontSize: "1.1rem" }))))),
         (areChildsPresent && expanded) || isRoot ? (react_1.default.createElement("ul", { style: {
                 listStyleType: "none",
                 paddingLeft: "12px",
@@ -150,7 +149,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
         }))) : null,
         react_1.default.createElement(Modal_1.default, { isOpen: modalIsOpen, onClose: closeModal, contentLabel: "Stack Trace" },
             react_1.default.createElement("div", { style: {
-                    fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+                    fontFamily: "system-ui, Tahoma, Geneva, Verdana, sans-serif",
                     fontSize: "12px",
                     lineHeight: "1.2",
                     color: "#333",
@@ -163,11 +162,10 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                     width: "100%",
                     display: "flex",
                     alignItems: "center",
-                    background: "#e0f7fa",
-                    border: "1px solid #007bff",
+                    background: "#E9F0FE",
                     padding: "10px",
-                    margin: "5px",
-                    borderRadius: "5px",
+                    margin: "4px",
+                    borderRadius: "3px",
                     position: "relative",
                 }, key: index }, trace)))))));
 };

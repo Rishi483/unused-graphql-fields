@@ -138,20 +138,31 @@ const TreeViewRenderer = () => {
         const updatedPaths = paths.filter((path) => !path.startsWith(id));
         setPaths(updatedPaths);
     };
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement("button", { style: {
-                backgroundColor: "#f44336",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                fontSize: "13px",
-                cursor: "pointer",
-                borderRadius: "5px",
-                marginBottom: "10px",
-            }, onClick: (e) => {
+    return (react_1.default.createElement("div", { style: { width: "600px", maxHeight: "600px" } },
+        react_1.default.createElement("button", { onClick: (e) => {
                 e.stopPropagation();
                 clearAllEntries();
-            } }, "Clear"),
+            }, style: {
+                display: "flex",
+                alignItems: "center",
+                padding: "5px 10px",
+                border: "2px solid red",
+                borderRadius: "20px",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "14px",
+                color: "#212121",
+                backgroundColor: "white",
+                cursor: "pointer",
+                marginTop: "10px",
+            } },
+            react_1.default.createElement("span", { style: {
+                    height: "10px",
+                    width: "10px",
+                    backgroundColor: "red",
+                    borderRadius: "50%",
+                    marginRight: "5px",
+                } }),
+            "Clear"),
         Object.keys(nestedObject).map((item) => (react_1.default.createElement(TreeView_1.default, { key: item, onDelete: handleDelete, tempSize: tempSize, title: item.split("_")[0], path: item, data: nestedObject[item] })))));
 };
 exports.default = TreeViewRenderer;

@@ -33,31 +33,50 @@ const TreeViewRenderer_1 = __importDefault(require("./TreeViewRenderer"));
 const UnusedFieldsViewer = () => {
     const [isExpanded, setIsExpanded] = (0, react_1.useState)(false);
     const toggleExpansion = () => setIsExpanded(!isExpanded);
-    const closeExpansion = () => setIsExpanded(false);
-    return (react_1.default.createElement("div", { style: {
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            width: "auto",
-            minWidth: isExpanded ? "400px" : "0",
-            maxHeight: "80vh",
-            padding: "15px 15px 7px 15px",
-            backgroundColor: "#f9f9f9",
-            borderRadius: "8px",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-            overflow: "scroll",
-            transition: "all 0.1s ease",
-            zIndex: 100,
-            color: "black",
-        }, onClick: isExpanded ? undefined : toggleExpansion }, isExpanded ? (react_1.default.createElement("div", null,
+    return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { style: {
-                display: "flex",
-                justifyContent: "flex-end",
+                display: isExpanded ? "flex" : "none",
                 alignItems: "center",
-                marginBottom: "10px",
+                position: "fixed",
+                bottom: "20px",
+                right: "78px",
+                backgroundColor: "white",
+                padding: "15px 20px",
+                zIndex: 100,
+                borderRadius: "5px",
+                maxHeight: "600px",
+                overflow: "scroll",
+                transition: "all 0.3s ease",
             } },
-            react_1.default.createElement(md_1.MdOutlineClose, { fontSize: "20px", cursor: "pointer", onClick: closeExpansion })),
-        react_1.default.createElement(TreeViewRenderer_1.default, null))) : (react_1.default.createElement("span", { style: { fontSize: "24px" } },
-        react_1.default.createElement(vsc_1.VscDebugAlt, null)))));
+            react_1.default.createElement(TreeViewRenderer_1.default, null)),
+        react_1.default.createElement("div", { style: {
+                position: "fixed",
+                cursor: "pointer",
+                bottom: "20px",
+                right: "20px",
+                width: "auto",
+                minWidth: "50px",
+                maxHeight: "80vh",
+                padding: "15px 15px 7px 15px",
+                backgroundColor: "#f9f9f9",
+                borderRadius: "8px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                overflow: "scroll",
+                transition: "all 0.3s ease",
+                zIndex: 100,
+                color: "black",
+            }, onClick: toggleExpansion },
+            react_1.default.createElement("span", { style: {
+                    fontSize: isExpanded ? 0 : "24px",
+                    transition: "all 0.3s ease",
+                    opacity: isExpanded ? 0 : 1,
+                } },
+                react_1.default.createElement(vsc_1.VscDebugAlt, null)),
+            react_1.default.createElement("span", { style: {
+                    fontSize: !isExpanded ? 0 : "24px",
+                    transition: "all 0.3s ease",
+                    opacity: isExpanded ? 1 : 0,
+                } },
+                react_1.default.createElement(md_1.MdOutlineClose, null)))));
 };
 exports.default = UnusedFieldsViewer;

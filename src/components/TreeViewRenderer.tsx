@@ -168,6 +168,7 @@ const TreeViewRenderer: React.FC = () => {
           backgroundColor: "white",
           cursor: "pointer",
           marginTop: "10px",
+          marginBottom:"10px"
         }}
       >
         <span

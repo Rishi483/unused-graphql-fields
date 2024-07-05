@@ -13,7 +13,7 @@ const UnusedFieldsViewer: React.FC = () => {
       <div
         style={{
           display: isExpanded ? "flex" : "none",
-          alignItems: "center",
+          justifyContent: "center",
           position: "fixed",
           bottom: "20px",
           right: "78px",
@@ -22,6 +22,7 @@ const UnusedFieldsViewer: React.FC = () => {
           zIndex: 100,
           borderRadius: "5px",
           maxHeight: "600px",
+          minHeight:"100px",
           overflow: "scroll",
           transition: "all 0.3s ease",
         }}

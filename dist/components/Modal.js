@@ -20,33 +20,33 @@ const Modal = ({ isOpen, onClose, contentLabel, children, }) => {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 1000,
+            fontFamily: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
         } },
         react_1.default.createElement("div", { style: {
                 position: "relative",
                 backgroundColor: "white",
-                padding: "10px",
+                padding: "20px",
                 minWidth: "300px",
                 maxWidth: "600px",
-                borderRadius: "8px",
+                borderRadius: "12px",
                 outline: "none",
-                boxShadow: "0 3px 5px rgba(0,0,0,0.3)",
+                boxShadow: "0 3px 15px rgba(0,0,0,0.3)",
             } },
             react_1.default.createElement("div", { style: {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: "10px",
-                    marginBottom: "10px",
+                    borderBottom: "1px solid #eee",
                 } },
-                react_1.default.createElement("h2", { style: { margin: 0, color: "black" } }, contentLabel),
+                react_1.default.createElement("h2", { style: { margin: 0, color: "black", fontSize: "1.5em" } }, contentLabel),
                 react_1.default.createElement("button", { onClick: onClose, style: {
                         background: "none",
                         border: "none",
                         cursor: "pointer",
-                        padding: 0,
+                        padding: "0",
+                        marginLeft: "10px",
                     } },
-                    react_1.default.createElement(md_1.MdOutlineClose, { style: { color: "black", fontSize: "20px" } }))),
-            react_1.default.createElement("div", { style: { padding: "10px", backgroundColor: "white" } }, children))), document.body);
+                    react_1.default.createElement(md_1.MdOutlineClose, { style: { color: "black", fontSize: "24px" } }))),
+            react_1.default.createElement("div", { style: { padding: "10px 0", backgroundColor: "white" } }, children))), document.body);
 };
 exports.default = Modal;
