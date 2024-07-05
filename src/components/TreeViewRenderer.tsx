@@ -150,25 +150,38 @@ const TreeViewRenderer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ width: "600px", maxHeight: "600px" }}>
       <button
-        style={{
-          backgroundColor: "#f44336",
-          color: "white",
-          border: "none",
-          padding: "5px 10px",
-          fontSize: "13px",
-          cursor: "pointer",
-          borderRadius: "5px",
-          marginBottom: "10px",
-        }}
         onClick={(e) => {
           e.stopPropagation();
           clearAllEntries();
         }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          padding: "5px 10px",
+          border: "2px solid red",
+          borderRadius: "20px",
+          fontFamily: "Arial, sans-serif",
+          fontSize: "14px",
+          color: "#212121",
+          backgroundColor: "white",
+          cursor: "pointer",
+          marginTop: "10px",
+        }}
       >
+        <span
+          style={{
+            height: "10px",
+            width: "10px",
+            backgroundColor: "red",
+            borderRadius: "50%",
+            marginRight: "5px",
+          }}
+        ></span>
         Clear
       </button>
+
       {Object.keys(nestedObject).map((item) => (
         <TreeView
           key={item}

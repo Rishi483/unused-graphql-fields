@@ -30,18 +30,19 @@ const Modal: React.FC<ModalProps> = ({
         alignItems: "center",
         justifyContent: "center",
         zIndex: 1000,
+        fontFamily: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
       }}
     >
       <div
         style={{
           position: "relative",
           backgroundColor: "white",
-          padding: "10px",
+          padding: "20px",
           minWidth: "300px",
           maxWidth: "600px",
-          borderRadius: "8px",
+          borderRadius: "12px",
           outline: "none",
-          boxShadow: "0 3px 5px rgba(0,0,0,0.3)",
+          boxShadow: "0 3px 15px rgba(0,0,0,0.3)",
         }}
       >
         <div
@@ -49,25 +50,24 @@ const Modal: React.FC<ModalProps> = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "10px",
-            marginBottom: "10px",
+            borderBottom: "1px solid #eee",
           }}
         >
-          <h2 style={{ margin: 0, color: "black" }}>{contentLabel}</h2>
+          <h2 style={{ margin: 0, color: "black", fontSize: "1.5em" }}>{contentLabel}</h2>
           <button
             onClick={onClose}
             style={{
               background: "none",
               border: "none",
               cursor: "pointer",
-              padding: 0,
+              padding: "0",
+              marginLeft: "10px",
             }}
           >
-            <MdOutlineClose style={{ color: "black",fontSize:"20px" }} />
+            <MdOutlineClose style={{ color: "black", fontSize: "24px" }} />
           </button>
         </div>
-        <div style={{ padding: "10px", backgroundColor: "white" }}>
+        <div style={{ padding: "10px 0", backgroundColor: "white" }}>
           {children}
         </div>
       </div>

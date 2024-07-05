@@ -7,52 +7,67 @@ const UnusedFieldsViewer: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpansion = () => setIsExpanded(!isExpanded);
-  const closeExpansion = () => setIsExpanded(false);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "20px",
-        width: "auto",
-        minWidth: isExpanded ? "400px" : "0",
-        maxHeight: "80vh",
-        padding: "15px 15px 7px 15px",
-        backgroundColor: "#f9f9f9",
-        borderRadius: "8px",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-        overflow: "scroll",
-        transition: "all 0.1s ease",
-        zIndex: 100,
-        color: "black",
-      }}
-      onClick={isExpanded ? undefined : toggleExpansion}
-    >
-      {isExpanded ? (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              marginBottom: "10px",
-            }}
-          >
-            <MdOutlineClose
-              fontSize={"20px"}
-              cursor={"pointer"}
-              onClick={closeExpansion}
-            />
-          </div>
-          <TreeViewRenderer />
-        </div>
-      ) : (
-        <span style={{ fontSize: "24px" }}>
+    <>
+      <div
+        style={{
+          display: isExpanded ? "flex" : "none",
+          alignItems: "center",
+          position: "fixed",
+          bottom: "20px",
+          right: "78px",
+          backgroundColor: "white",
+          padding: "15px 20px",
+          zIndex: 100,
+          borderRadius: "5px",
+          maxHeight: "600px",
+          overflow: "scroll",
+          transition: "all 0.3s ease",
+        }}
+      >
+        <TreeViewRenderer />
+      </div>
+      <div
+        style={{
+          position: "fixed",
+          cursor: "pointer",
+          bottom: "20px",
+          right: "20px",
+          width: "auto",
+          minWidth: "50px",
+          maxHeight: "80vh",
+          padding: "15px 15px 7px 15px",
+          backgroundColor: "#f9f9f9",
+          borderRadius: "8px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+          overflow: "scroll",
+          transition: "all 0.3s ease",
+          zIndex: 100,
+          color: "black",
+        }}
+        onClick={toggleExpansion}
+      >
+        <span
+          style={{
+            fontSize: isExpanded ? 0 : "24px",
+            transition: "all 0.3s ease",
+            opacity: isExpanded ? 0 : 1,
+          }}
+        >
           <VscDebugAlt />
         </span>
-      )}
-    </div>
+        <span
+          style={{
+            fontSize: !isExpanded ? 0 : "24px",
+            transition: "all 0.3s ease",
+            opacity: isExpanded ? 1 : 0,
+          }}
+        >
+          <MdOutlineClose />
+        </span>
+      </div>
+    </>
   );
 };
 

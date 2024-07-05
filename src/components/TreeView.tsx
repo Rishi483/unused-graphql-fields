@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { keys, keysSize } from "../lib/state";
-import { FaChevronRight } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronRight, FaChevronDown } from "react-icons/fa";
+import { MdDeleteOutline, MdInfoOutline } from "react-icons/md";
+import { GoStack } from "react-icons/go";
 import Modal from "./Modal";
 import { prefixForKey } from "../utils/prefixForKey";
 
@@ -66,6 +67,8 @@ const TreeView: React.FC<TreeNodeProps> = ({
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [hoveredTooltip, setHoveredTooltip] = useState<boolean>(false);
+
   rootSize = rootSize === -1 ? getSizeOfPrefixedKey(path) : rootSize;
   const curPathSize = getSizeOfPrefixedKey(path);
   const unusedPercentage =
@@ -88,18 +91,11 @@ const TreeView: React.FC<TreeNodeProps> = ({
   return (
     <div
       style={{
-        fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+        fontFamily:
+          "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
         fontSize: "14px",
-        color: "#333",
-        marginLeft: "20px",
-        lineHeight: "1.5",
-        padding: "4px",
-        margin: "5px 0",
-        backgroundColor: isRoot ? "#F1F8FF" : "#FFFFFF",
-        borderLeft: isRoot ? "5px solid #2196F3" : "3px solid #BBDEFB",
-        paddingLeft: isRoot ? "8px" : "12px",
-        borderRadius: "4px",
-        minHeight: "25px",
+        margin: "0.5rem 0",
+        color: "black",
       }}
     >
       {!isRoot && (
@@ -110,16 +106,16 @@ const TreeView: React.FC<TreeNodeProps> = ({
             color: unUsedFlag ? "#9E9E9E" : "#424242",
             display: "flex",
             alignItems: "center",
-            backgroundColor: "#E3F2FD",
+            backgroundColor: "#E9F0FE",
             padding: "6px 8px",
-            borderRadius: "6px",
+            borderRadius: "5px",
             transition: "background-color 0.3s ease",
           }}
         >
-          <span style={{ marginRight: "4px" }}>
+          <span style={{ marginRight: "4px", marginTop: "4px" }}>
             {areChildsPresent ? (
               expanded ? (
-                <FaChevronDown />
+                <FaChevronDown style={{ marginTop: "3px" }} />
               ) : (
                 <FaChevronRight />
               )
@@ -127,57 +123,71 @@ const TreeView: React.FC<TreeNodeProps> = ({
               ""
             )}
           </span>
-          <span style={{ fontWeight: "bold", flex: 1 }}>
-            {title}
+          <span style={{ fontWeight: "bold", flex: 1 }}>{title}</span>
+          <div
+            style={{
+              position: "relative",
+              display: "inline-block",
+              cursor: "pointer",
+              margin: 0,
+            }}
+            onMouseEnter={() => setHoveredTooltip(true)}
+            onMouseLeave={() => setHoveredTooltip(false)}
+          >
+            <MdInfoOutline
+              fontSize="1.2rem"
+              style={{ marginTop: "4px", color: "black" }}
+            />
             <span
               style={{
-                marginLeft: "8px",
+                visibility: hoveredTooltip ? "visible" : "hidden",
+                width: "200px",
+                backgroundColor: "#eef0f1",
+                color: "black",
+                textAlign: "center",
+                borderRadius: "6px",
+                padding: "5px 10px",
+                position: "absolute",
+                zIndex: 1,
+                bottom: "25%",
+                right: "100%",
+                marginLeft: "-80px",
+                opacity: hoveredTooltip ? 1 : 0,
+                transition: "opacity 0.3s",
+                fontFamily:
+                  "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
                 fontSize: "12px",
-                color: unUsedFlag ? "#9E9E9E" : "#616161",
+                boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.2)",
               }}
             >
-              ({unusedPercentage}% unused of {formatBytes(curPathSize)})
+              {unusedPercentage}% unused of {formatBytes(curPathSize)}
             </span>
-          </span>
+          </div>
           {stackTrace.length > 0 && (
-            <>
-              <button
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginLeft: "10px",
+              }}
+            >
+              <GoStack
                 onClick={(e) => {
                   e.stopPropagation();
                   openModal();
                 }}
-                style={{
-                  marginLeft: "12px",
-                  padding: "2px 4px",
-                  fontSize: "12px",
-                  color: "#FFFFFF",
-                  backgroundColor: "#4CAF50",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                View StackTrace
-              </button>
-              <button
+                fontSize="1.1rem"
+                style={{ color: "black" }}
+              />
+              <MdDeleteOutline
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete();
                 }}
-                style={{
-                  marginLeft: "12px",
-                  padding: "2px 4px",
-                  fontSize: "12px",
-                  color: "#FFFFFF",
-                  backgroundColor: "#f44336",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                Remove
-              </button>
-            </>
+                fontSize="1.1rem"
+              />
+            </div>
           )}
         </div>
       )}
@@ -213,7 +223,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
       >
         <div
           style={{
-            fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+            fontFamily: "system-ui, Tahoma, Geneva, Verdana, sans-serif",
             fontSize: "12px",
             lineHeight: "1.2",
             color: "#333",
@@ -230,11 +240,10 @@ const TreeView: React.FC<TreeNodeProps> = ({
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-                background: "#e0f7fa",
-                border: "1px solid #007bff",
+                background: "#E9F0FE",
                 padding: "10px",
-                margin: "5px",
-                borderRadius: "5px",
+                margin: "4px",
+                borderRadius: "3px",
                 position: "relative",
               }}
               key={index}
