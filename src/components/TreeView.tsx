@@ -126,7 +126,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
               ""
             )}
           </span>
-          <span style={{ fontWeight: "bold", flex: 1 }}>
+          <span style={{ fontWeight: "bold", flex: 1,maxWidth:"80%",overflow:"scroll"}}>
             {title}{" "}
             <span style={{ fontWeight: "normal" }}>
               ({unusedPercentage}% unused of {formatBytes(curPathSize)})
@@ -206,7 +206,8 @@ const TreeView: React.FC<TreeNodeProps> = ({
           {stackTrace.map((trace, index) => (
             <div
               style={{
-                width: "100%",
+                overflow:"scroll",
+                width:"100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",

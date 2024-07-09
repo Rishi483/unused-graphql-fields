@@ -94,7 +94,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                 transition: "all 0.5s ease",
             }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) },
             react_1.default.createElement("span", { style: { marginRight: "4px", marginTop: "4px" } }, areChildsPresent ? (expanded ? (react_1.default.createElement(fa_1.FaChevronDown, { style: { marginTop: "3px" } })) : (react_1.default.createElement(fa_1.FaChevronRight, null))) : ("")),
-            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1 } },
+            react_1.default.createElement("span", { style: { fontWeight: "bold", flex: 1, maxWidth: "80%", overflow: "scroll" } },
                 title,
                 " ",
                 react_1.default.createElement("span", { style: { fontWeight: "normal" } },
@@ -138,6 +138,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                     height: "400px",
                     overflow: "scroll",
                 } }, stackTrace.map((trace, index) => (react_1.default.createElement("div", { style: {
+                    overflow: "scroll",
                     width: "100%",
                     display: "flex",
                     alignItems: "center",
