@@ -139,14 +139,18 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
                     overflow: "scroll",
                 } }, stackTrace.map((trace, index) => (react_1.default.createElement("div", { style: {
                     width: "100%",
+                    maxWidth: "550px",
                     display: "flex",
-                    alignItems: "center",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
                     justifyContent: "space-between",
                     border: "1px solid gray",
                     padding: "10px",
                     margin: "4px",
                     borderRadius: "3px",
                     position: "relative",
+                    overflow: "hidden",
+                    wordBreak: "break-word"
                 }, key: index }, trace)))))));
 };
 exports.default = TreeView;

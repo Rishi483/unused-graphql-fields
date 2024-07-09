@@ -205,21 +205,25 @@ const TreeView: React.FC<TreeNodeProps> = ({
         >
           {stackTrace.map((trace, index) => (
             <div
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                border: "1px solid gray",
-                padding: "10px",
-                margin: "4px",
-                borderRadius: "3px",
-                position: "relative",
-              }}
-              key={index}
-            >
-              {trace}
-            </div>
+            style={{
+              width: "100%",
+              maxWidth: "550px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              border: "1px solid gray",
+              padding: "10px",
+              margin: "4px",
+              borderRadius: "3px",
+              position: "relative",
+              overflow: "hidden",
+              wordBreak: "break-word"
+            }}
+            key={index}
+          >
+            {trace}
+          </div>
           ))}
         </div>
       </Modal>
