@@ -22,10 +22,10 @@ const UnusedFieldsViewer: React.FC = () => {
           zIndex: 100,
           borderRadius: "5px",
           maxHeight: "600px",
-          minHeight: "100px",
+          minHeight:"100px",
           overflow: "scroll",
           transition: "all 0.3s ease",
-          width: "600px",
+          width:"600px"
         }}
       >
         <TreeViewRenderer />
