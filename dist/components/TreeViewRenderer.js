@@ -30,7 +30,8 @@ const react_1 = __importStar(require("react"));
 const TreeView_1 = __importDefault(require("./TreeView"));
 const state_1 = require("../lib/state");
 const prefixForKey_1 = require("../utils/prefixForKey");
-const TreeViewRenderer = () => {
+const clearAllEntries_1 = require("../utils/clearAllEntries");
+const TreeViewRenderer = ({ showClearAllButton, }) => {
     const [keys, setKeys] = (0, react_1.useState)((0, state_1.keys)());
     const [keysSize, setKeysSize] = (0, react_1.useState)((0, state_1.keysSize)());
     const [paths, setPaths] = (0, react_1.useState)([]);
@@ -41,7 +42,7 @@ const TreeViewRenderer = () => {
             const newKeysSize = (0, state_1.keysSize)();
             setKeys(newKeys);
             setKeysSize(newKeysSize);
-        }, 2000);
+        }, 100);
         return () => clearInterval(interval);
     }, [state_1.keys, state_1.keysSize]);
     (0, react_1.useEffect)(() => {
@@ -105,14 +106,6 @@ const TreeViewRenderer = () => {
         });
         return result;
     };
-    const clearAllEntries = () => {
-        (0, state_1.keys)(new Map());
-        (0, state_1.keysSize)(new Map());
-        setKeys(new Map());
-        setKeysSize(new Map());
-        setPaths([]);
-        setTempSize([]);
-    };
     const trees = buildTree(keys);
     const tempSizeList = [];
     Object.keys(trees).forEach((rootKey) => {
@@ -140,9 +133,9 @@ const TreeViewRenderer = () => {
     };
     const [hoverState, setHoverState] = (0, react_1.useState)(false);
     return (react_1.default.createElement("div", { style: { width: "100%", maxHeight: "600px" } },
-        react_1.default.createElement("button", { onClick: (e) => {
+        showClearAllButton && (react_1.default.createElement("button", { onClick: (e) => {
                 e.stopPropagation();
-                clearAllEntries();
+                (0, clearAllEntries_1.clearAllEntries)();
             }, style: {
                 color: hoverState ? "red" : "black",
                 border: `1px solid ${hoverState ? "red" : "gray"}`,
@@ -154,7 +147,7 @@ const TreeViewRenderer = () => {
                 backgroundColor: "#fff",
                 transition: "all 0.3s ease",
                 fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
-            }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) }, "Clear All"),
+            }, onMouseEnter: () => setHoverState(true), onMouseLeave: () => setHoverState(false) }, "Clear All")),
         Object.keys(nestedObject).map((item) => (react_1.default.createElement(TreeView_1.default, { key: item, onDelete: handleDelete, tempSize: tempSize, title: item.split("_")[0], path: item, data: nestedObject[item] })))));
 };
 exports.default = TreeViewRenderer;

@@ -3,6 +3,7 @@ import TreeView from "./TreeView";
 import { keys as keysVar, keysSize as keysSizeVar } from "../lib/state";
 import { prefixForKey } from "../utils/prefixForKey";
 import { ContextKeyMapType, KeySizeMapType } from "../lib/state";
+import { clearAllEntries } from "../utils/clearAllEntries";
 
 interface TempSize {
   key: string;
@@ -15,7 +16,13 @@ interface Node {
   sum?: number;
 }
 
-const TreeViewRenderer: React.FC = () => {
+interface TreeViewRendererProps {
+  showClearAllButton?: boolean;
+}
+
+const TreeViewRenderer: React.FC<TreeViewRendererProps> = ({
+  showClearAllButton,
+}) => {
   const [keys, setKeys] = useState<ContextKeyMapType>(keysVar());
   const [keysSize, setKeysSize] = useState<KeySizeMapType>(keysSizeVar());
   const [paths, setPaths] = useState<string[]>([]);
@@ -27,7 +34,7 @@ const TreeViewRenderer: React.FC = () => {
       const newKeysSize = keysSizeVar();
       setKeys(newKeys);
       setKeysSize(newKeysSize);
-    }, 2000);
+    }, 100);
     return () => clearInterval(interval);
   }, [keysVar, keysSizeVar]);
 
@@ -111,15 +118,6 @@ const TreeViewRenderer: React.FC = () => {
     return result;
   };
 
-  const clearAllEntries = () => {
-    keysVar(new Map());
-    keysSizeVar(new Map());
-    setKeys(new Map());
-    setKeysSize(new Map());
-    setPaths([]);
-    setTempSize([]);
-  };
-
   const trees = buildTree(keys);
   const tempSizeList: TempSize[] = [];
   Object.keys(trees).forEach((rootKey) => {
@@ -151,29 +149,31 @@ const TreeViewRenderer: React.FC = () => {
   const [hoverState, setHoverState] = useState(false);
   return (
     <div style={{ width: "100%", maxHeight: "600px" }}>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          clearAllEntries();
-        }}
-        style={{
-          color: hoverState ? "red" : "black",
-          border: `1px solid ${hoverState ? "red" : "gray"}`,
-          padding: "7px 13px",
-          borderRadius: "4px",
-          fontSize: "14px",
-          cursor: "pointer",
-          margin: "6px 0",
-          backgroundColor: "#fff",
-          transition: "all 0.3s ease",
-          fontFamily:
-            "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
-        }}
-        onMouseEnter={() => setHoverState(true)}
-        onMouseLeave={() => setHoverState(false)}
-      >
-        Clear All
-      </button>
+      {showClearAllButton && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            clearAllEntries();
+          }}
+          style={{
+            color: hoverState ? "red" : "black",
+            border: `1px solid ${hoverState ? "red" : "gray"}`,
+            padding: "7px 13px",
+            borderRadius: "4px",
+            fontSize: "14px",
+            cursor: "pointer",
+            margin: "6px 0",
+            backgroundColor: "#fff",
+            transition: "all 0.3s ease",
+            fontFamily:
+              "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+          }}
+          onMouseEnter={() => setHoverState(true)}
+          onMouseLeave={() => setHoverState(false)}
+        >
+          Clear All
+        </button>
+      )}
 
       {Object.keys(nestedObject).map((item) => (
         <TreeView

@@ -1,7 +1,7 @@
 # unused-graphql-fields
 
 
-`unused-graphql-fields` is a utility package for detecting unused fields in your GraphQL queries. It provides custom hooks, `useTrackedQuery`, `useTrackedLazyQuery` and `useTrackedData` as alternatives to Apollo Client's hooks. Additionally, the package includes a component, `UnusedFieldsViewer`,`TreeViewRenderer`, which can be used to visualize the unused fields in your application.
+`unused-graphql-fields` is a utility package for detecting unused fields in your GraphQL queries. It provides custom hooks, `useTrackedQuery`, `useTrackedLazyQuery` and `useTrackedData` as alternatives to Apollo Client's hooks. Additionally, the package includes a component, `UnusedFieldsViewer` and `TreeViewRenderer` which can be used to visualize the unused fields in your application. Also it provides `clearAllEntries` function which can be invoked to clear the list of queries from the viewer components.
 
 ## Installation
 
@@ -22,6 +22,7 @@ NODE_ENV="production"
 
 ## Usage
 Replace your existing Apollo Client hooks with the custom hooks provided by unused-graphql-fields.
+
 **For useTrackedQuery**
 ```
 import { useTrackedQuery } from 'unused-graphql-fields';
@@ -107,6 +108,24 @@ import App from './App';
 const Root = () => (
   <ApolloProvider client={client}>
     <UnusedFieldsViewer />
+    <App />
+  </ApolloProvider>
+);
+
+export default Root;
+```
+**To visualize unused fields using the TreeViewRenderer component, you can use it like this. Additionally, it accepts an optional prop `showClearAllButton`, which can be set to true or false to show the `Clear All` button for clearing the list from the viewer component.**
+
+```
+import React from 'react';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './apolloClient'; // assuming you have set up your Apollo Client
+import { TreeViewRenderer } from 'unused-graphql-fields';
+import App from './App';
+
+const Root = () => (
+  <ApolloProvider client={client}>
+    <TreeViewRenderer showClearAllButton={true} />
     <App />
   </ApolloProvider>
 );
