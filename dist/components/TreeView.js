@@ -80,7 +80,7 @@ const TreeView = ({ data, title, tempSize, isRoot = false, path, onDelete, rootS
     return (react_1.default.createElement("div", { style: {
             fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
             fontSize: "14px",
-            margin: "0.5rem 0",
+            margin: "0.8rem 0",
             color: "black",
         } },
         !isRoot && (react_1.default.createElement("div", { onClick: () => setExpanded(!expanded), style: {

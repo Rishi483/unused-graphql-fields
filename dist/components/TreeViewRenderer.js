@@ -132,7 +132,7 @@ const TreeViewRenderer = ({ showClearAllButton, }) => {
         setPaths(updatedPaths);
     };
     const [hoverState, setHoverState] = (0, react_1.useState)(false);
-    return (react_1.default.createElement("div", { style: { width: "100%", maxHeight: "600px" } },
+    return (react_1.default.createElement("div", { style: { width: "100%", maxHeight: "600px", padding: "5px" } },
         showClearAllButton && (react_1.default.createElement("button", { onClick: (e) => {
                 e.stopPropagation();
                 (0, clearAllEntries_1.clearAllEntries)();

@@ -95,7 +95,7 @@ const TreeView: React.FC<TreeNodeProps> = ({
         fontFamily:
           "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
         fontSize: "14px",
-        margin: "0.5rem 0",
+        margin: "0.8rem 0",
         color: "black",
       }}
     >

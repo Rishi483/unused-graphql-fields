@@ -148,7 +148,7 @@ const TreeViewRenderer: React.FC<TreeViewRendererProps> = ({
   };
   const [hoverState, setHoverState] = useState(false);
   return (
-    <div style={{ width: "100%", maxHeight: "600px" }}>
+    <div style={{ width: "100%", maxHeight: "600px" ,padding:"5px"}}>
       {showClearAllButton && (
         <button
           onClick={(e) => {
