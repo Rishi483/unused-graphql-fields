@@ -18,7 +18,7 @@ const UnusedFieldsViewer: React.FC = () => {
           bottom: "20px",
           right: "78px",
           backgroundColor: "white",
-          padding: "15px 20px",
+          padding: "9px 16px",
           zIndex: 100,
           borderRadius: "5px",
           maxHeight: "600px",
